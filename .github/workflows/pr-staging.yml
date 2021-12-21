@@ -22,7 +22,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: sfdx-actions/setup-sfdx@v1
       - run: |
           wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
           mkdir ~/sfdx
@@ -37,7 +36,6 @@ jobs:
           sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY }} --username=${{ secrets.USERNAME }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
       - name: 'Creating manifest'
         run: |
-          sfdx force:source:manifest:create --sourcepath .\ObjectsToDeploy\ 
           sfdx force:source:manifest:create --sourcepath ObjectsToDeploy 
           ls
       - name: 'Deploy manifest'
