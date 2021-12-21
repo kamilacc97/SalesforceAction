@@ -23,6 +23,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: sfdx-actions/setup-sfdx@v1
+      - run: |
+          wget https://developer.salesforce.com/media/salesforce-cli/sfdx/channels/stable/sfdx-linux-x64.tar.xz
+          mkdir ~/sfdx
+          tar xJf sfdx-linux-x64.tar.xz -C ~/sfdx --strip-components 1
+          export PATH=~/sfdx/bin:$PATH
+          PATH=~/sfdx/bin:$PATH
+          
       
       - name: ' authorize sf'
         run: |
