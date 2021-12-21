@@ -34,7 +34,7 @@ jobs:
       - name: 'Authorize'
         run: sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY }} --username=${{ secrets.USERNAME }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
       - name: 'Creating manifest'
-        run: sfdx force:source:manifest:create --sourcepath .\ObjectsToDeploy\ --outputdir .\temp\
+        run: sfdx force:source:manifest:create --sourcepath ./ObjectsToDeploy/ --outputdir ./temp/
       - name: 'Deploy manifest'
-        run: sfdx force:source:deploy -g -u hub-org -x .\temp\package.xml    
+        run: sfdx force:source:deploy -g -u hub-org -x ./temp/package.xml    
 
