@@ -30,8 +30,8 @@ jobs:
           export PATH=~/sfdx/bin:$PATH
           PATH=~/sfdx/bin:$PATH
       
-          -name: 'test sfdx'
-          run: sfdx force
+      - name: 'test sfdx'
+        run: sfdx force
       
           
       
