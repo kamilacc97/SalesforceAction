@@ -31,6 +31,7 @@ jobs:
       - name: 'Creating manifest'
         run: |
           sfdx force:source:manifest:create --sourcepath .\ObjectsToDeploy\ 
+          ls
       - name: 'Deploy manifest'
         run: sfdx force:source:deploy -g -u hub-org -x package.xml    
 
