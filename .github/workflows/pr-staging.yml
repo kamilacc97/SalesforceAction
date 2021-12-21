@@ -20,19 +20,25 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: 'checkout'
+        uses: actions/checkout@v2
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      - uses: sfdx-actions/setup-sfdx@1.1.1
       
-      - name: ' authorize sf'
-        run: |
-          openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out server.key -base64 -K ${{secrets.DECRYPTION_KEY}} -iv ${{secrets.DECRYPTION_IV}}
-          sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY }} --username=${{ secrets.USERNAME }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
-      - name: 'Creating manifest'
-        run: |
-          sfdx force:source:manifest:create --help
-          sfdx force:source:manifest:create --sourcepath ObjectsToDeploy 
-          ls
-      - name: 'Deploy manifest'
-        run: sfdx force:source:deploy -g -u hub-org -x package.xml    
+      - name: 'deploy'
+        uses: tiagonnascimento/sfdx-orgdev-build-deploy@v2
+        with:
+          type: 'sandbox'
+          certificate_path: assets/server.key.enc
+          decryption_key: ${{ secrets.DECRYPTION_KEY }}
+          decryption_iv: ${{ secrets.DECRYPTION_IV }}
+          client_id: ${{ secrets.CONSUMER_KEY }}
+          username: ${{ secrets.USERNAME }}
+          checkonly: true
+          deploy_wait_time: '10'
+          manifest_path: package.xml
+          
+          
+          
+          
+          
 
